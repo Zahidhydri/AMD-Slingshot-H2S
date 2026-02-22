@@ -108,9 +108,9 @@ async def process_graph(nodes_list, edges_list, stream=True):
                 
             elif ntype == 'gemini':
                 system_prompt = current_node['data'].get('prompt', '')
-                model = genai.GenerativeModel('gemini-1.5-flash')
-                full_prompt = f"Instruction: {system_prompt}\n\nInput Data:\n{current_context}"
                 try:
+                    model = genai.GenerativeModel('gemini-2.5-flash')
+                    full_prompt = f"Instruction: {system_prompt}\n\nInput Data:\n{current_context}"
                     response = model.generate_content(full_prompt)
                     current_context = response.text
                 except Exception as api_err:

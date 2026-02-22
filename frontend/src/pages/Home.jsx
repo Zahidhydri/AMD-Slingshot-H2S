@@ -64,15 +64,15 @@ const Home = () => {
                     </div>
 
                     <h1 className="text-6xl md:text-8xl font-black text-gray-900 tracking-tighter leading-[1.1] mb-8">
-                        The ultimate AI <br />
+                        The No-Code <br />
                         <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 relative inline-block">
-                            Micro-App Builder
+                            Generative App Builder
                             <svg className="absolute w-full h-4 -bottom-1 left-0 text-blue-400/30" viewBox="0 0 100 10" preserveAspectRatio="none"><path d="M0 5 Q 50 15 100 5" stroke="currentColor" strokeWidth="4" fill="transparent" strokeLinecap="round" /></svg>
                         </span>
                     </h1>
 
                     <p className="max-w-3xl mx-auto text-xl md:text-2xl text-gray-600 mb-12 leading-relaxed font-light">
-                        Drag, drop, and connect AI primitives on a visual canvas. Turn your logic into standalone web tools powered by Google Gemini and FastAPI — instantly.
+                        Empowering <span className="text-blue-600 font-semibold underline decoration-blue-200 decoration-4">all students</span> to build custom AI tools visually. Remove the technical barrier and shift from a consumer to a <span className="text-indigo-600 font-semibold italic">creator</span> of specialized AI solutions.
                     </p>
 
                     <div className="flex flex-col sm:flex-row justify-center items-center gap-5">
@@ -181,37 +181,61 @@ const Home = () => {
                 </div>
             </main>
 
-            {/* How It Works Section */}
-            <section id="how-it-works" className="py-24 bg-gray-50 border-y border-gray-100">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="text-center mb-16">
-                        <h2 className="text-4xl font-extrabold text-gray-900 tracking-tight">From Logic Idea to Live Web App</h2>
-                        <p className="mt-4 text-xl text-gray-600">Three simple steps to build your AI applications.</p>
-                    </div>
-
-                    <div className="relative mt-20">
-                        {/* Connecting Line between steps */}
-                        <div className="hidden md:block absolute top-[2rem] left-0 w-full h-[3px] bg-gradient-to-r from-blue-200 via-indigo-200 to-emerald-200 z-0"></div>
-
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
-                            <StepCard
-                                number="1"
-                                icon={Layout}
-                                title="Map Your Logic"
-                                description="Drag input zones, AI agents, and output forms onto the canvas. Connect them to define how data flows."
-                            />
-                            <StepCard
-                                number="2"
-                                icon={Code}
-                                title="Configure AI Prompts"
-                                description="Tell Google Gemini exactly how to process the data passed between each node."
-                            />
-                            <StepCard
-                                number="3"
-                                icon={Share2}
-                                title="Publish & Share"
-                                description="Click Deploy. We instantly provision a FastAPI backend execution graph and generate a live, shareable URL."
-                            />
+            {/* Mission Section */}
+            <section className="py-24 bg-gradient-to-b from-white to-gray-50 border-y border-gray-100 relative overflow-hidden">
+                <div className="absolute top-0 right-0 p-20 opacity-[0.03] pointer-events-none">
+                    <Sparkles size={400} />
+                </div>
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+                        <div>
+                            <span className="text-blue-600 font-bold uppercase tracking-widest text-sm mb-4 block">The Mission</span>
+                            <h2 className="text-4xl md:text-5xl font-black text-gray-900 mb-8 tracking-tight leading-tight">
+                                Shifting Students from <br />
+                                Users to <span className="text-blue-600 underline">Architects</span>
+                            </h2>
+                            <div className="space-y-8">
+                                <div className="flex gap-6">
+                                    <div className="w-12 h-12 bg-blue-100 rounded-2xl flex items-center justify-center shrink-0">
+                                        <Layout className="text-blue-600" />
+                                    </div>
+                                    <div>
+                                        <h4 className="text-xl font-bold text-gray-900 mb-2">The Concept</h4>
+                                        <p className="text-gray-600 leading-relaxed font-light">A web-based, drag-and-drop canvas that removes the technical barrier to creating custom AI tools entirely.</p>
+                                    </div>
+                                </div>
+                                <div className="flex gap-6">
+                                    <div className="w-12 h-12 bg-indigo-100 rounded-2xl flex items-center justify-center shrink-0">
+                                        <Zap className="text-indigo-600" />
+                                    </div>
+                                    <div>
+                                        <h4 className="text-xl font-bold text-gray-900 mb-2">How it Works</h4>
+                                        <p className="text-gray-600 leading-relaxed font-light">Visually connect pre-configured AI blocks (Audio &rarr; Summarize &rarr; Graphic) to build tailored, specialized workflows.</p>
+                                    </div>
+                                </div>
+                                <div className="flex gap-6">
+                                    <div className="w-12 h-12 bg-emerald-100 rounded-2xl flex items-center justify-center shrink-0">
+                                        <Share2 className="text-emerald-600" />
+                                    </div>
+                                    <div>
+                                        <h4 className="text-xl font-bold text-gray-900 mb-2">The Impact</h4>
+                                        <p className="text-gray-600 leading-relaxed font-light">Students are no longer mere consumers of generic chatbots; they become active creators of highly tailored AI solutions.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="bg-white p-4 rounded-[2.5rem] shadow-2xl shadow-blue-500/10 border border-blue-50/50">
+                            <div className="rounded-[2rem] overflow-hidden bg-slate-950 aspect-[4/3] relative group">
+                                <div className="absolute inset-0 bg-gradient-to-br from-blue-600/20 to-purple-600/20 mix-blend-overlay"></div>
+                                <div className="absolute inset-0 flex items-center justify-center">
+                                    <div className="text-center space-y-4">
+                                        <Bot size={80} className="text-blue-400 mx-auto animate-bounce duration-[2000ms]" />
+                                        <div className="px-6 py-2 bg-white/10 backdrop-blur-md rounded-full border border-white/20">
+                                            <span className="text-white text-sm font-bold tracking-widest uppercase">App Deployment Live</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

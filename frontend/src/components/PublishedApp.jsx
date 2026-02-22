@@ -19,9 +19,9 @@ function PublishedApp() {
                 const data = await response.json();
                 setAppData(data);
 
-                // Initialize input field if possible
+                // Initialize input field from app data if available, but don't run automatically
                 const inputNode = data.nodes?.find(n => n.type === 'input');
-                if (inputNode?.data?.context) {
+                if (inputNode?.data?.context && !userInput) {
                     setUserInput(inputNode.data.context);
                 }
             } catch (err) {
@@ -160,11 +160,13 @@ function PublishedApp() {
             </header>
 
             <main className="relative z-10 max-w-2xl mx-auto px-6 mt-4">
-                <div className="text-center mb-12">
-                    <h1 className="text-4xl md:text-5xl font-black text-white mb-4 tracking-tight">
-                        AI Workflow <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400">Live</span>
+                <div className="text-center mb-10">
+                    <h1 className="text-5xl md:text-6xl font-black text-white mb-6 tracking-tight leading-tight">
+                        {appData?.name || "AI Workflow"} <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400">Live</span>
                     </h1>
-                    <p className="text-gray-400 text-lg">Experience the power of this custom automation. Enter your parameters below.</p>
+                    <p className="text-gray-400 text-xl max-w-lg mx-auto leading-relaxed">
+                        The intelligence is ready. Provide your requirements below to begin the generation.
+                    </p>
                 </div>
 
                 {/* Main Card */}
@@ -175,12 +177,12 @@ function PublishedApp() {
 
                     <div className="space-y-6">
                         <div>
-                            <label className="block text-xs font-bold text-indigo-400 uppercase tracking-[0.2em] mb-3 ml-1">Your Input</label>
+                            <label className="block text-sm font-bold text-indigo-400 uppercase tracking-[0.2em] mb-4 ml-1">Configuration & Input</label>
                             <textarea
                                 value={userInput}
                                 onChange={(e) => setUserInput(e.target.value)}
-                                placeholder="What would you like the AI to process?"
-                                className="w-full bg-slate-950/50 border-2 border-slate-800 rounded-3xl p-6 text-white text-lg placeholder:text-slate-600 focus:border-indigo-500 outline-none transition-all min-h-[140px] resize-none shadow-inner"
+                                placeholder="Describe what you want the AI to do..."
+                                className="w-full bg-slate-950/60 border-2 border-slate-800 focus:border-indigo-500 rounded-[2rem] p-8 text-white text-xl placeholder:text-slate-700 outline-none transition-all min-h-[220px] resize-none shadow-2xl"
                             />
                         </div>
 
@@ -188,8 +190,8 @@ function PublishedApp() {
                             onClick={handleRun}
                             disabled={isRunning || !userInput.trim()}
                             className={`w-full group relative overflow-hidden h-20 rounded-3xl font-black text-xl transition-all flex items-center justify-center gap-3 active:scale-95 ${isRunning || !userInput.trim()
-                                    ? 'bg-slate-800 text-slate-500 cursor-not-allowed opacity-50'
-                                    : 'bg-indigo-600 hover:bg-indigo-500 text-white shadow-[0_0_40px_rgba(79,70,229,0.3)] hover:shadow-[0_0_60px_rgba(79,70,229,0.5)]'
+                                ? 'bg-slate-800 text-slate-500 cursor-not-allowed opacity-50'
+                                : 'bg-indigo-600 hover:bg-indigo-500 text-white shadow-[0_0_40px_rgba(79,70,229,0.3)] hover:shadow-[0_0_60px_rgba(79,70,229,0.5)]'
                                 }`}
                         >
                             {isRunning ? (
