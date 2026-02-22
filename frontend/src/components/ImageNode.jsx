@@ -52,7 +52,7 @@ const ImageNode = ({ id, data, isConnectable }) => {
                 type="target"
                 position={Position.Left}
                 isConnectable={isConnectable}
-                className="w-5 h-5 bg-fuchsia-500 border-2 border-white shadow-md rounded-full hover:bg-fuchsia-400 hover:scale-125 transition-all z-10"
+                className="!w-7 !h-7 !bg-fuchsia-500 border-[3px] border-white shadow-[0_0_10px_rgba(217,70,239,0.4)] rounded-xl hover:!bg-fuchsia-400 hover:scale-110 transition-all z-20 flex items-center justify-center after:content-[''] after:w-2 after:h-2 after:bg-white after:rounded-full"
             />
 
             {/* Output Handle */}
@@ -60,7 +60,7 @@ const ImageNode = ({ id, data, isConnectable }) => {
                 type="source"
                 position={Position.Right}
                 isConnectable={isConnectable}
-                className="w-5 h-5 bg-pink-500 border-2 border-white shadow-md rounded-full hover:bg-pink-400 hover:scale-125 transition-all z-10"
+                className="!w-7 !h-7 !bg-pink-500 border-[3px] border-white shadow-[0_0_10px_rgba(236,72,153,0.4)] rounded-xl hover:!bg-pink-400 hover:scale-110 transition-all z-20 flex items-center justify-center after:content-[''] after:w-2 after:h-2 after:bg-white after:rounded-full"
             />
         </div>
     );

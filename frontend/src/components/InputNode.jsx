@@ -51,7 +51,7 @@ const InputNode = ({ id, data, isConnectable }) => {
                 type="source"
                 position={Position.Right}
                 isConnectable={isConnectable}
-                className="w-5 h-5 bg-emerald-500 border-2 border-white shadow-md rounded-full hover:bg-emerald-400 hover:scale-125 transition-all z-10"
+                className="!w-7 !h-7 !bg-emerald-500 border-[3px] border-white shadow-[0_0_10px_rgba(16,185,129,0.4)] rounded-xl hover:!bg-emerald-400 hover:scale-110 transition-all z-20 flex items-center justify-center after:content-[''] after:w-2 after:h-2 after:bg-white after:rounded-full"
             />
         </div>
     );

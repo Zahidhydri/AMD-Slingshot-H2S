@@ -63,7 +63,7 @@ const OutputNode = ({ id, data, isConnectable }) => {
                 type="target"
                 position={Position.Left}
                 isConnectable={isConnectable}
-                className="w-5 h-5 bg-orange-500 border-2 border-white shadow-md rounded-full hover:bg-orange-400 hover:scale-125 transition-all z-10"
+                className="!w-7 !h-7 !bg-orange-500 border-[3px] border-white shadow-[0_0_10px_rgba(249,115,22,0.4)] rounded-xl hover:!bg-orange-400 hover:scale-110 transition-all z-20 flex items-center justify-center after:content-[''] after:w-2 after:h-2 after:bg-white after:rounded-full"
             />
         </div>
     );
