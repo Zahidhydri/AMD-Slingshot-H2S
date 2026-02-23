@@ -279,7 +279,7 @@ const Home = () => {
                             <span className="text-2xl font-bold tracking-tight">BlockForge AI</span>
                         </div>
                         <div className="flex space-x-6">
-                            <a href="https://github.com/Zahidhydri" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors">
+                            <a href="https://github.com/Zahidhydri/AMD-Slingshot-H2S" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors">
                                 <span className="sr-only">GitHub</span>
                                 <Github className="w-6 h-6" />
                             </a>
