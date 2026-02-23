@@ -128,16 +128,21 @@ async def process_graph(nodes_list, edges_list, stream=True):
                 current_context = f"IMAGE:https://image.pollinations.ai/prompt/{urllib.parse.quote(full_p)}?width=1024&height=1024&nologo=true"
                 if stream: await asyncio.sleep(0.5)
                 
-            elif ntype == 'audio':
-                p = current_node['data'].get('prompt', '')
+            elif ntype == 'audio' or ntype == 'textToSpeech':
+                p = current_node['data'].get('prompt', '') or current_node['data'].get('text', '')
                 full_p = (f"{p} {current_context}".strip() or "Hello")[:250]
                 import urllib.parse
-                current_context = f"AUDIO:https://api.streamelements.com/kappa/v2/speech?voice=Brian&text={urllib.parse.quote(full_p)}"
+                voice = current_node['data'].get('voice', 'Brian')
+                current_context = f"AUDIO:https://api.streamelements.com/kappa/v2/speech?voice={voice}&text={urllib.parse.quote(full_p)}"
                 if stream: await asyncio.sleep(0.5)
                 
             elif ntype == 'output':
                 final_output = current_context
                 if stream: await asyncio.sleep(0.5)
+                
+            # Allow raw passthrough for UI/Logic nodes in the execute graph just so they don't crash
+            else:
+                pass
 
             node_outputs[current_id] = current_context
             if stream: yield f"data: {json.dumps({'type': 'node_finish', 'node_id': current_id, 'result': current_context})}\n\n"
@@ -255,29 +260,32 @@ async def publish_app_ai(payload: GraphExecutionRequest):
     model = genai.GenerativeModel('gemini-2.5-flash')
     
     prompt = f"""
-    You are an expert full-stack developer. The user has designed a visual workflow in BlockForge AI.
+    You are an expert Senior Full-Stack Developer and UI/UX Designer. The user has designed a visual workflow/app in BlockForge AI Studio.
     Logic Summary: {logic_summary}
-    Graph Data (for reference): {json.dumps(payload.model_dump())}
+    Graph Data JSON (for reference): {json.dumps(payload.model_dump())}
     
-    TASK: Write a COMPLETE, single-file HTML application using Tailwind CSS and Vanilla JavaScript.
+    TASK: Write a COMPLETE, single-file HTML application using Vanilla JavaScript and Standard CSS (DO NOT use Tailwind CSS).
     
+    CRITICAL DECISION POINT:
+    Look at the node types in the Logic Summary.
+    1. purely UI/Data apps: If the graph ONLY contains UI nodes and Logic nodes AND DOES NOT contain AI nodes ('gemini', 'imageGen', 'textToSpeech'), then generate a standard, self-contained web app. Use `localStorage` to mock database actions or `fetch` for external API requests. DO NOT call the BlockForge `/execute` endpoint.
+    2. AI-Powered apps: If the graph CONTAINS AI nodes ('gemini', 'imageGen', etc.), then the app MUST include a workflow run button that gathers inputs and makes a POST request to 'http://localhost:8000/execute' with the exact graph layout as the payload.
+
     REQUIREMENTS:
-    1. A beautiful, modern, and responsive UI that fits the context of the app logic.
-    2. Input fields for each 'input' node found in the graph.
-    3. Display areas for each 'output' node.
-    4. A "Run" button that gathers inputs and makes a POST request to 'http://localhost:8000/execute'.
-    5. IMPORTANT: The request to '/execute' must pass the EXACT 'nodes' and 'edges' arrays from the graph data provided below, but with the 'data.context' of the 'input' nodes updated to the user's current input values.
-    6. Handle the streaming response from '/execute' using the EventSource API (or fetch with a reader) to parse the 'data: ' lines correctly. Update the UI in real-time as nodes start and finish.
-    7. Use Lucide icons (via CDN) and Inter font for a premium look.
-    8. Add subtle animations (e.g., loading spinners) during execution.
-    9. Crucial: The tool should look like a bespoke, branded app, not a developer tool. Give it a creative name and style based on the logic summary.
-    10. Ensure the code is self-contained and ready to run.
-    11. The backend host is 'http://localhost:8000'. Use this for the POST request.
+    1. A beautiful, modern, professional UI matching the visual logic described in the graph. You MUST use standard CSS (using the `<style>` tag), but it must look highly premium (e.g., glassmorphism, distinct shadows, rounded corners, sleek color palettes like dark mode #0f172a or minimal clean light mode). 
+    CRITICAL CSS RULE: DO NOT USE Tailwind CSS classes in the HTML. DO NOT include `<script src="https://cdn.tailwindcss.com"></script>`. If you include the Tailwind CDN, your application will be REJECTED. Write raw, high-quality CSS.
+    2. Map 'textInput' nodes to real HTML inputs, 'button' nodes to real buttons, 'output' nodes to visually distinct result areas.
+    3. If there is a 'listView' or 'imageDisplay', render appropriate UI mockups for them.
+    4. For AI apps (Decision #2), handle the streaming response from 'http://localhost:8000/execute' using the EventSource API (or fetch reader) to parse 'data: ' lines and update the UI in real-time as nodes process.
+    5. Use Lucide icons (via https://unpkg.com/lucide@latest) and Google Fonts (e.g. Inter or Outfit) for a premium look.
+    6. Include micro-animations for interactions (smooth transitions, hover effects, loading spinners).
+    7. Ensure code is fully self-contained and visually stunning (think Apple, Vercel, or Linear design quality).
+    8. The payload to '/execute' MUST contain the 'nodes' and 'edges' arrays from the graph data. For the 'gemini' node or the 'textInput' node acting as the input, you MUST update its `data` payload with the user's live values from the HTML inputs before sending the request. 
     
-    GRAPH DATA TO EMBED IN JS:
+    GRAPH DATA TO EMBED IN JS (if AI app):
     {json.dumps(payload.model_dump())}
     
-    Respond ONLY with the raw HTML code, no markdown formatting.
+    Respond ONLY with the raw HTML code, no markdown formatting. Do not wrap it in ```html ... ``` tags, just the raw code.
     """
     
     try:

@@ -19,5 +19,27 @@
   background: transparent !important;
   padding: 0 !important;
   box-shadow: none !important;
-  width: 340px !important;
+  /* Allow nodes to set their own width */
+  width: auto;
+}
+
+/* React Flow Controls & MiniMap Dark Theme Overrides */
+.react-flow__controls-button {
+  background-color: #1e293b !important;
+  border-bottom: 1px solid #334155 !important;
+  fill: #94a3b8 !important;
+  transition: all 0.2s;
+}
+
+.react-flow__controls-button:hover {
+  background-color: #334155 !important;
+  fill: #f8fafc !important;
+}
+
+.react-flow__minimap {
+  background-color: #1e293b !important;
+}
+
+.react-flow__minimap-mask {
+  fill: rgba(15, 23, 42, 0.7) !important;
 }
